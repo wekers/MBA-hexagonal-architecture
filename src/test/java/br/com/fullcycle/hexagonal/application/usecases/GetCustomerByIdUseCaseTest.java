@@ -48,7 +48,7 @@ class GetCustomerByIdUseCaseTest {
 
     @Test
     @DisplayName("Deve obter um vazio ao tentar recuperar um cliente não existente por id")
-    public void testGetByIdEithInvalidId() {
+    public void testGetByIdWithInvalidId() {
         // given
         final Long expectedID = UUID.randomUUID().getMostSignificantBits();
 
