@@ -57,6 +57,6 @@ public class SubscribeCustomerToEventUseCase extends UseCase<SubscribeCustomerTo
 
     }
 
-    public record Input(Long eventId, Long customerId) {}
+    public record Input(Long customerId, Long eventId) {}
     public record Output(Long eventId, String ticketStatus, Instant reservationDate) {}
 }
