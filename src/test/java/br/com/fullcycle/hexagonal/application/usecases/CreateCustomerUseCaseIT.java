@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 public class CreateCustomerUseCaseIT {
 
     @Autowired
-    private CustomerService customerService;
+    private CreateCustomerUseCase useCase;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -45,7 +45,6 @@ public class CreateCustomerUseCaseIT {
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
         // when
-        final var useCase = new CreateCustomerUseCase(customerService);
         final var output = useCase.execute(createInput);
 
         // then
@@ -73,7 +72,6 @@ public class CreateCustomerUseCaseIT {
 
 
         // when
-        final var useCase = new CreateCustomerUseCase(customerService);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
@@ -98,7 +96,6 @@ public class CreateCustomerUseCaseIT {
 
 
         // when
-        final var useCase = new CreateCustomerUseCase(customerService);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
@@ -111,7 +108,7 @@ public class CreateCustomerUseCaseIT {
         aCustomer.setCpf(cpf);
         aCustomer.setName(name);
         aCustomer.setEmail(email);
-        return customerService.save(aCustomer);
+        return customerRepository.save(aCustomer);
     }
 
 }
