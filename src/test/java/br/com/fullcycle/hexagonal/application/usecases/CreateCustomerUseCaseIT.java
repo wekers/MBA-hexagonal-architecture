@@ -1,9 +1,10 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.models.Customer;
-import br.com.fullcycle.hexagonal.repositories.CustomerRepository;
-import br.com.fullcycle.hexagonal.services.CustomerService;
+import br.com.fullcycle.hexagonal.infrastructure.Main;
+import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
+import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.usecases.CreateCustomerUseCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,13 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.Mockito.*;
-
 @ActiveProfiles("test")
-@SpringBootTest
+@SpringBootTest(classes = Main.class)
 public class CreateCustomerUseCaseIT {
 
     @Autowired
