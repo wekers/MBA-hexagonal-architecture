@@ -1,16 +1,14 @@
-package br.com.fullcycle.hexagonal.infrastructure.controllers;
+package br.com.fullcycle.hexagonal.infrastructure.rest;
 
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.usecases.CreateCustomerUseCase;
 import br.com.fullcycle.hexagonal.infrastructure.usecases.GetCustomerByIdUseCase;
-import br.com.fullcycle.hexagonal.infrastructure.dtos.CustomerDTO;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.fullcycle.hexagonal.infrastructure.dtos.NewCustomerDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-
+import java.util.Objects;
 
 
 // Adapter
@@ -18,14 +16,20 @@ import java.net.URI;
 @RequestMapping(value = "customers")
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+
+    private final CreateCustomerUseCase createCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
+
+    public CustomerController(CreateCustomerUseCase createCustomerUseCase, GetCustomerByIdUseCase getCustomerByIdUseCase) {
+        this.createCustomerUseCase = Objects.requireNonNull(createCustomerUseCase);
+        this.getCustomerByIdUseCase = Objects.requireNonNull(getCustomerByIdUseCase);
+    }
+
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CustomerDTO dto) {
+    public ResponseEntity<?> create(@RequestBody NewCustomerDTO dto) {
         try {
-            final var useCase = new CreateCustomerUseCase(customerService);
-            final var output = useCase.execute(new CreateCustomerUseCase.Input(dto.getCpf(), dto.getEmail(), dto.getName()));
+            final var output = createCustomerUseCase.execute(new CreateCustomerUseCase.Input(dto.cpf(), dto.email(), dto.name()));
             return ResponseEntity.created(URI.create("/customers/" + output.id())).body(output);
         } catch (ValidationException ex){
             return ResponseEntity.unprocessableEntity().body(ex.getMessage());
@@ -35,8 +39,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        final var useCase = new GetCustomerByIdUseCase(customerService);
-        return useCase.execute(new GetCustomerByIdUseCase.Input(id))
+        return getCustomerByIdUseCase.execute(new GetCustomerByIdUseCase.Input(id))
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
 
