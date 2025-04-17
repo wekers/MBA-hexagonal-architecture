@@ -27,6 +27,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework:spring-webflux")
 	testImplementation("org.springframework.graphql:spring-graphql-test")
+	runtimeOnly("com.mysql:mysql-connector-j")
 
 	testRuntimeOnly("com.h2database:h2")
 }
