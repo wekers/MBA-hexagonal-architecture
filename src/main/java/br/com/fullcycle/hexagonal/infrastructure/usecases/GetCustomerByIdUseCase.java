@@ -1,27 +1,28 @@
 package br.com.fullcycle.hexagonal.infrastructure.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
+import br.com.fullcycle.hexagonal.application.entities.CustomerId;
+import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
 
 import java.util.Objects;
 import java.util.Optional;
 
 public class GetCustomerByIdUseCase extends UseCase<GetCustomerByIdUseCase.Input, Optional<GetCustomerByIdUseCase.Output>> {
 
-    private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
-    public GetCustomerByIdUseCase(final CustomerService customerService) {
-        this.customerService = Objects.requireNonNull(customerService);
+    public GetCustomerByIdUseCase(final CustomerRepository customerRepository) {
+        this.customerRepository = Objects.requireNonNull(customerRepository);
     }
 
     @Override
     public Optional<Output> execute(final Input input) {
-        return customerService.findById(input.id)
-                .map(c -> new Output(c.getId(), c.getCpf(), c.getEmail(), c.getName()));
+        return customerRepository.customerOfId(CustomerId.with(input.id))
+                .map(c -> new Output(c.CustomerId().value().toString(), c.cpf(), c.email(), c.name()));
 
     }
 
-    public record Input(Long id) {}
+    public record Input(String id) {}
 
-    public record Output(Long id, String cpf, String email, String name) {}
+    public record Output(String id, String cpf, String email, String name) {}
 }

@@ -1,17 +1,12 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
+import br.com.fullcycle.hexagonal.application.InMemoryCustomerRepository;
+import br.com.fullcycle.hexagonal.application.entities.Customer;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
 import br.com.fullcycle.hexagonal.infrastructure.usecases.CreateCustomerUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.Mockito.*;
 
 public class CreateCustomerUseCaseTest {
 
@@ -20,22 +15,15 @@ public class CreateCustomerUseCaseTest {
     public void testCreateCustomer() throws Exception {
 
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
 
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
+        final var customerRepository = new InMemoryCustomerRepository();
 
         // when
-        final var customerService =  mock(CustomerService.class);
-        when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.empty());
-        when(customerService.findByEmail(expectedEmail)).thenReturn(Optional.empty());
-        when(customerService.save(any())).thenAnswer(a -> {
-            var customer = a.getArgument(0, Customer.class);
-            customer.setId(UUID.randomUUID().getMostSignificantBits());
-            return customer;
-        });
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var output = useCase.execute(createInput);
 
         // then
@@ -53,25 +41,21 @@ public class CreateCustomerUseCaseTest {
     public void testCreateWithDuplicatedCPFShouldFail() throws Exception {
 
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
-        final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
+        final var aCustomer = Customer.newCustomer(expectedName, expectedCPF, expectedEmail);
 
-        final var aCustomer = new Customer();
-        aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
-        aCustomer.setCpf(expectedCPF);
-        aCustomer.setName(expectedName);
-        aCustomer.setEmail(expectedEmail);
+        final var customerRepository = new InMemoryCustomerRepository();
+        customerRepository.create(aCustomer);
+
+        final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
 
         // when
-        final var customerService =  mock(CustomerService.class);
-        when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.of(aCustomer));
-
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
@@ -84,29 +68,25 @@ public class CreateCustomerUseCaseTest {
     public void testCreateWithDuplicatedEmailShouldFail() throws Exception {
 
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
+        final var aCustomer = Customer.newCustomer(expectedName, expectedCPF, expectedEmail);
+        final var customerRepository = new InMemoryCustomerRepository();
+        customerRepository.create(aCustomer);
+
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
-        final var aCustomer = new Customer();
-        aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
-        aCustomer.setCpf(expectedCPF);
-        aCustomer.setName(expectedName);
-        aCustomer.setEmail(expectedEmail);
-
-
         // when
-        final var customerService =  mock(CustomerService.class);
-        when(customerService.findByEmail(expectedEmail)).thenReturn(Optional.of(aCustomer));
-
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
 
         Assertions.assertEquals(expectedError, actualException.getMessage());
     }
+
+
 }
