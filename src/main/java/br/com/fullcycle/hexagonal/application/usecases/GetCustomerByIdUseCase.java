@@ -1,4 +1,4 @@
-package br.com.fullcycle.hexagonal.infrastructure.usecases;
+package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.entities.CustomerId;
@@ -18,7 +18,7 @@ public class GetCustomerByIdUseCase extends UseCase<GetCustomerByIdUseCase.Input
     @Override
     public Optional<Output> execute(final Input input) {
         return customerRepository.customerOfId(CustomerId.with(input.id))
-                .map(c -> new Output(c.CustomerId().value().toString(), c.cpf(), c.email(), c.name()));
+                .map(c -> new Output(c.CustomerId().value().toString(), c.cpf().value(), c.email().value(), c.name().value()));
 
     }
 
