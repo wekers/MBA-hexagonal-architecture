@@ -1,9 +1,9 @@
 package br.com.fullcycle.hexagonal.infrastructure.configurations;
 
 
+import br.com.fullcycle.hexagonal.application.usecases.*;
 import br.com.fullcycle.hexagonal.infrastructure.services.EventService;
 import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
-import br.com.fullcycle.hexagonal.infrastructure.usecases.*;
 import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class UseCaseConfig {
 
     @Bean
     public CreatePartnerUseCase createPartnerUseCase() {
-        return new CreatePartnerUseCase(partnerService);
+        return new CreatePartnerUseCase(null);
     }
 
     @Bean
@@ -46,7 +46,7 @@ public class UseCaseConfig {
 
     @Bean
     public GetPartnerByIdUseCase getPartnerByIdUseCase() {
-        return new GetPartnerByIdUseCase(partnerService);
+        return new GetPartnerByIdUseCase(null);
     }
 
     @Bean
