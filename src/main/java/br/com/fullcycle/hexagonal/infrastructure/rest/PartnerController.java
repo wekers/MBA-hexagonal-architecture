@@ -2,8 +2,8 @@ package br.com.fullcycle.hexagonal.infrastructure.rest;
 
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.NewPartnerDTO;
-import br.com.fullcycle.hexagonal.infrastructure.usecases.CreatePartnerUseCase;
-import br.com.fullcycle.hexagonal.infrastructure.usecases.GetPartnerByIdUseCase;
+import br.com.fullcycle.hexagonal.application.usecases.CreatePartnerUseCase;
+import br.com.fullcycle.hexagonal.application.usecases.GetPartnerByIdUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +35,7 @@ public class PartnerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
        return getPartnerByIdUseCase.execute(new GetPartnerByIdUseCase.Input(id))
                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
