@@ -42,15 +42,15 @@ public class Partner {
         return email;
     }
 
-    public void setName(final String name) {
+    private void setName(final String name) {
         this.name = new Name(name);
     }
 
-    public void setCnpj(final String cnpj) {
+    private void setCnpj(final String cnpj) {
         this.cnpj = new Cnpj(cnpj);
     }
 
-    public void setEmail(final String email) {
+    private void setEmail(final String email) {
         this.email = new Email(email);
     }
 }
