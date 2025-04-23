@@ -16,27 +16,15 @@ public class Event {
 
     public Event(final EventId eventId, final String name, final String date, final Integer totalSpots, final PartnerId partnerId) {
 
-        if(eventId == null) {
-            throw new ValidationException("Invalid eventId for Event");
-        }
-
-        if (date == null){
-            throw new ValidationException("Invalid date for Event");
-        }
-
-        if (totalSpots == null || totalSpots <= 0) {
-            throw new ValidationException("Invalid totalSpots for Event");
-        }
-
         if (partnerId == null) {
             throw new ValidationException("Invalid partnerId for Event");
         }
 
         this.eventId = eventId;
-        this.name = new Name(name);
-        this.date = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.totalSpots = totalSpots;
-        this.partnerId = partnerId;
+        this.setName(name);
+        this.setDate(date);
+        this.setTotalSpots(totalSpots);
+        this.setPartnerId(partnerId);
 
     }
 
@@ -62,5 +50,30 @@ public class Event {
 
     public PartnerId partnerId() {
         return partnerId;
+    }
+
+    public void setName(final String name) {
+        this.name = new Name(name);
+    }
+
+    public void setDate(final String date) {
+        if (date == null){
+            throw new ValidationException("Invalid date for Event");
+        }
+        this.date = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);;
+    }
+
+    public void setTotalSpots(final Integer totalSpots) {
+        if (totalSpots == null || totalSpots <= 0) {
+            throw new ValidationException("Invalid totalSpots for Event");
+        }
+        this.totalSpots = totalSpots;
+    }
+
+    public void setPartnerId(PartnerId partnerId) {
+        if(eventId == null) {
+            throw new ValidationException("Invalid eventId for Event");
+        }
+        this.partnerId = partnerId;
     }
 }

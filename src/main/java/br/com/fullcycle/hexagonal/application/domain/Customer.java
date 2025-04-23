@@ -17,9 +17,9 @@ public class Customer {
 
 
         this.customerId = customerId;
-        this.name = new Name(name);
-        this.cpf = new Cpf(cpf);
-        this.email = new Email(email);
+        this.setName(name);
+        this.setCpf(cpf);
+        this.setEmail(email);
     }
 
     public static Customer newCustomer(String name, String cpf, String email) {
@@ -40,6 +40,18 @@ public class Customer {
 
     public Email email() {
         return email;
+    }
+
+    public void setName(final String name) {
+        this.name = new Name(name);
+    }
+
+    public void setCpf(final String cpf) {
+        this.cpf = new Cpf(cpf);
+    }
+
+    public void setEmail(final String email) {
+        this.email = new Email(email);
     }
 }
 
