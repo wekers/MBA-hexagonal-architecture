@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
-import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.IntegrationTest;
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.Main;
 import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
