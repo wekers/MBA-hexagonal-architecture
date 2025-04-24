@@ -26,7 +26,7 @@ public class Customer {
         return new Customer(CustomerId.unique(), name, cpf, email);
     }
 
-    public CustomerId CustomerId() {
+    public CustomerId customerId() {
         return customerId;
     }
 

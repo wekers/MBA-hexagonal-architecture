@@ -41,7 +41,7 @@ public class SubscribeCustomerToEventUseCase extends UseCase<SubscribeCustomerTo
                 .orElseThrow(() -> new ValidationException("Event not found"));
 
 
-        final Ticket ticket = anEvent.reserveTicket(aCustomer.CustomerId());
+        final Ticket ticket = anEvent.reserveTicket(aCustomer.customerId());
         ticketRepository.create(ticket);
         eventRepository.update(anEvent);
 
