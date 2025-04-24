@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Event {
 
     private final EventId eventId;
 
+    private static final int ONE = 1;
     private Name name;
     private LocalDate date;
     private int totalSpots;
@@ -40,6 +42,24 @@ public class Event {
 
     public static Event newEvent(final String name, final String date, final Integer totalSpots, final Partner partner){
         return new Event(EventId.unique(), name, date, totalSpots, partner.partnerId());
+    }
+
+    public Ticket reserveTicket(final CustomerId aCustomerId) {
+        this.allTickets()
+                .stream()
+                .filter(it -> Objects.equals(it.customerId(), aCustomerId))
+                .findFirst()
+                .ifPresent(it -> {
+                    throw new ValidationException("Customer already has a ticket for this event");
+                });
+
+        if (totalSpots() < allTickets().size() + ONE) {
+            throw new ValidationException("No more tickets available for this event");
+        }
+
+        final var newTicket = Ticket.newTicket(aCustomerId, eventId);
+        this.tickets.add(new EventTicket(newTicket.ticketId(), eventId(), aCustomerId, allTickets().size() + ONE));
+        return newTicket;
     }
 
     public EventId eventId() {
@@ -78,7 +98,7 @@ public class Event {
     }
 
     private void setTotalSpots(final Integer totalSpots) {
-        if (totalSpots == null || totalSpots <= 0) {
+        if (totalSpots == null || totalSpots < 0) {
             throw new ValidationException("Invalid totalSpots for Event");
         }
         this.totalSpots = totalSpots;
@@ -90,4 +110,6 @@ public class Event {
         }
         this.partnerId = partnerId;
     }
+
+
 }
