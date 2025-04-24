@@ -2,11 +2,12 @@ package br.com.fullcycle.hexagonal.infrastructure.configurations;
 
 
 import br.com.fullcycle.hexagonal.application.usecases.*;
+import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.EventRepository;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
 import br.com.fullcycle.hexagonal.infrastructure.services.EventService;
 import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,8 +58,9 @@ public class UseCaseConfig {
     }
 
     @Bean
-    public SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase() {
-        return new SubscribeCustomerToEventUseCase(customerService, eventService);
+    public SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase(CustomerRepository customerRepository, EventRepository eventRepository) {
+        // TODO: Implementar, Fix dependency
+        return new SubscribeCustomerToEventUseCase(null, null, null);
     }
 
 }
