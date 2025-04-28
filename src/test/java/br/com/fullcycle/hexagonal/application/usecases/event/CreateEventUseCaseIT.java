@@ -3,9 +3,9 @@ package br.com.fullcycle.hexagonal.application.usecases.event;
 import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.EventRepository;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.PartnerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.EventJpaRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +17,9 @@ class CreateEventUseCaseIT extends IntegrationTest {
     @Autowired
     private CreateEventUseCase useCase;
     @Autowired
-    private PartnerRepository partnerRepository;
+    private PartnerJpaRepository partnerRepository;
     @Autowired
-    private EventRepository eventRepository;
+    private EventJpaRepository eventRepository;
 
     @BeforeEach
     void tearDown() {
@@ -78,8 +78,8 @@ class CreateEventUseCaseIT extends IntegrationTest {
 
     }
 
-    private Partner createPartner(final String cnpj, final String email, final String name) {
-        final var aPartner = new Partner();
+    private PartnerEntity createPartner(final String cnpj, final String email, final String name) {
+        final var aPartner = new PartnerEntity();
         aPartner.setName(cnpj);
         aPartner.setEmail(email);
         aPartner.setName(name);
