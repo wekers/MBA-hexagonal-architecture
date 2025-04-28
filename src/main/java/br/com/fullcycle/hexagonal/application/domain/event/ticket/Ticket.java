@@ -3,9 +3,9 @@ package br.com.fullcycle.hexagonal.application.domain.event.ticket;
 import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
 import br.com.fullcycle.hexagonal.application.domain.event.EventId;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.TicketStatus;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class Ticket {
 
@@ -92,5 +92,17 @@ public class Ticket {
             throw new ValidationException("Invalid reseve for Ticket");
         }
         this.reservedAt = reservedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(ticketId, ticket.ticketId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(ticketId);
     }
 }

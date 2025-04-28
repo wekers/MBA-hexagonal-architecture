@@ -122,5 +122,14 @@ public class Event {
         this.partnerId = partnerId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Event event)) return false;
+        return Objects.equals(eventId, event.eventId);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(eventId);
+    }
 }

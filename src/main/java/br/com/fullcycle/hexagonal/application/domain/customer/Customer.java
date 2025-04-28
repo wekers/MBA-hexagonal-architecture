@@ -5,6 +5,8 @@ import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.domain.person.Name;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
+import java.util.Objects;
+
 public class Customer {
 
     private final CustomerId customerId;
@@ -55,6 +57,17 @@ public class Customer {
 
     private void setEmail(final String email) {
         this.email = new Email(email);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Customer customer)) return false;
+        return Objects.equals(customerId, customer.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(customerId);
     }
 }
 
