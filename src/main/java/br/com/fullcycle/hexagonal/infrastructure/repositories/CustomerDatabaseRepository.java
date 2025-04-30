@@ -28,7 +28,7 @@ public class CustomerDatabaseRepository implements CustomerRepository {
     public Optional<Customer> customerOfId(final CustomerId anId) {
         Objects.requireNonNull(anId, "Id must not be null");
         return this.customerJpaRepository.findById(UUID.fromString(anId.value()))
-        .map(CustomerEntity::toCustomer);
+                .map(CustomerEntity::toCustomer);
     }
 
     @Override
@@ -55,5 +55,10 @@ public class CustomerDatabaseRepository implements CustomerRepository {
     @Transactional
     public Customer update(Customer customer) {
         return this.customerJpaRepository.save(CustomerEntity.of(customer)).toCustomer();
+    }
+
+    @Override
+    public void deleteAll() {
+        this.customerJpaRepository.deleteAll();
     }
 }

@@ -38,5 +38,10 @@ public class InMemoryEventRepository implements EventRepository {
         this.events.put(event.eventId().value(), event);
         return event;
     }
+
+    @Override
+    public void deleteAll() {
+        this.events.clear();
+    }
 }
 
