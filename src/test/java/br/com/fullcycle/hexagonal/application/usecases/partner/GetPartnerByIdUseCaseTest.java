@@ -1,8 +1,8 @@
 package br.com.fullcycle.hexagonal.application.usecases.partner;
 
 
-import br.com.fullcycle.hexagonal.application.repository.InMemoryPartnerRepository;
 import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
+import br.com.fullcycle.hexagonal.application.repository.InMemoryPartnerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
