@@ -2,15 +2,13 @@ package br.com.fullcycle.hexagonal.infrastructure.jpa.entities;
 
 import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
-import br.com.fullcycle.hexagonal.application.domain.person.Cnpj;
-import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Partner")
 @Table(name = "partners")
 public class PartnerEntity {
 
