@@ -12,8 +12,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 @Entity(name = "Event")
 @Table(name = "events")
 public class EventEntity {
