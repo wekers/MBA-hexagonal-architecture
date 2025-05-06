@@ -17,11 +17,10 @@ public record EventId(String value) {
     }
 
     public static EventId with(final String value) {
-     try {
-         return new EventId(UUID.fromString(value).toString());
-     } catch (IllegalArgumentException ex) {
-         throw  new ValidationException("Invalid value for EventId");
-     }
-
+        try {
+            return new EventId(UUID.fromString(value).toString());
+        } catch (IllegalArgumentException ex) {
+            throw new ValidationException("Invalid value for EventId");
+        }
     }
 }

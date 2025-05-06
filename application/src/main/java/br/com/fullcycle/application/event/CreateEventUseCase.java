@@ -19,24 +19,26 @@ public class CreateEventUseCase extends UseCase<CreateEventUseCase.Input, Create
         this.partnerRepository = Objects.requireNonNull(partnerRepository);
     }
 
-
     @Override
     public Output execute(final Input input) {
-        final var aPartner = partnerRepository.partnerOfId(PartnerId.with(input.partnerId)).orElseThrow( () ->  {
-            return new ValidationException("Partner not found");
-        });
+        final var aPartner = partnerRepository.partnerOfId(PartnerId.with(input.partnerId))
+                .orElseThrow(() -> new ValidationException("Partner not found"));
 
-        final var anEvent= eventRepository.create(Event.newEvent(input.name, input.date, input.totalSpots, aPartner));
+        final var anEvent =
+                eventRepository.create(Event.newEvent(input.name, input.date, input.totalSpots, aPartner));
 
         return new Output(
                 anEvent.eventId().value(),
                 input.date,
                 anEvent.name().value(),
                 anEvent.totalSpots(),
-                anEvent.partnerId().value());
+                anEvent.partnerId().value()
+        );
     }
 
-    public record Input(String date, String name, String partnerId, Integer totalSpots) {}
+    public record Input(String date, String name, String partnerId, Integer totalSpots) {
+    }
 
-    public record Output(String id, String date, String name, int totalSpots, String partnerId) {}
+    public record Output(String id, String date, String name, int totalSpots, String partnerId) {
+    }
 }

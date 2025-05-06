@@ -9,7 +9,7 @@ public interface CustomerRepository {
 
     Optional<Customer> customerOfId(CustomerId anId);
 
-    Optional<Customer> customerOfCpf(Cpf cpf);
+    Optional<Customer> customerOfCPF(Cpf cpf);
 
     Optional<Customer> customerOfEmail(Email email);
 

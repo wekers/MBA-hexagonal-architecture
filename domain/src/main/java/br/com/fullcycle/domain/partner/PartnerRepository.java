@@ -9,7 +9,7 @@ public interface PartnerRepository {
 
     Optional<Partner> partnerOfId(PartnerId anId);
 
-    Optional<Partner> partnerOfCnpj(Cnpj cnpj);
+    Optional<Partner> partnerOfCNPJ(Cnpj cnpj);
 
     Optional<Partner> partnerOfEmail(Email email);
 

@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-
 public class InMemoryCustomerRepository implements CustomerRepository {
 
     private final Map<String, Customer> customers;
@@ -30,7 +29,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> customerOfCpf(Cpf cpf) {
+    public Optional<Customer> customerOfCPF(Cpf cpf) {
         return Optional.ofNullable(this.customersByCPF.get(cpf.value()));
     }
 
@@ -62,4 +61,3 @@ public class InMemoryCustomerRepository implements CustomerRepository {
         this.customersByEmail.clear();
     }
 }
-

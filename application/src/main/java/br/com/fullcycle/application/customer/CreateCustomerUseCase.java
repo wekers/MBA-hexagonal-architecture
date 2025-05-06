@@ -3,12 +3,12 @@ package br.com.fullcycle.application.customer;
 import br.com.fullcycle.application.UseCase;
 import br.com.fullcycle.domain.customer.Customer;
 import br.com.fullcycle.domain.customer.CustomerRepository;
+import br.com.fullcycle.domain.exceptions.ValidationException;
 import br.com.fullcycle.domain.person.Cpf;
 import br.com.fullcycle.domain.person.Email;
-import br.com.fullcycle.domain.exceptions.ValidationException;
 
-
-public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, CreateCustomerUseCase.Output> {
+public class CreateCustomerUseCase
+        extends UseCase<CreateCustomerUseCase.Input, CreateCustomerUseCase.Output> {
 
     private final CustomerRepository customerRepository;
 
@@ -18,7 +18,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
 
     @Override
     public Output execute(final Input input) {
-        if (customerRepository.customerOfCpf(new Cpf(input.cpf)).isPresent()) {
+        if (customerRepository.customerOfCPF(new Cpf(input.cpf)).isPresent()) {
             throw new ValidationException("Customer already exists");
         }
 
@@ -28,8 +28,12 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
 
         var customer = customerRepository.create(Customer.newCustomer(input.name, input.cpf, input.email));
 
-
-        return new Output(customer.customerId().value().toString(), customer.cpf().value(), customer.email().value(), customer.name().value());
+        return new Output(
+                customer.customerId().value(),
+                customer.cpf().value(),
+                customer.email().value(),
+                customer.name().value()
+        );
     }
 
     public record Input(String cpf, String email, String name) {

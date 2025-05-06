@@ -17,11 +17,10 @@ public record PartnerId(String value) {
     }
 
     public static PartnerId with(final String value) {
-     try {
-         return new PartnerId(UUID.fromString(value).toString());
-     } catch (IllegalArgumentException ex) {
-         throw  new ValidationException("Invalid value for PartnerId");
-     }
-
+        try {
+            return new PartnerId(UUID.fromString(value).toString());
+        } catch (IllegalArgumentException ex) {
+            throw new ValidationException("Invalid value for PartnerId");
+        }
     }
 }

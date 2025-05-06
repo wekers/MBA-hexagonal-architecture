@@ -15,11 +15,9 @@ public class Customer {
     private Email email;
 
     public Customer(final CustomerId customerId, final String name, final String cpf, final String email) {
-
         if (customerId == null) {
             throw new ValidationException("Invalid customerId for Customer");
         }
-
 
         this.customerId = customerId;
         this.setName(name);
@@ -47,8 +45,17 @@ public class Customer {
         return email;
     }
 
-    private void setName(final String name) {
-        this.name = new Name(name);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(customerId, customer.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId);
     }
 
     private void setCpf(final String cpf) {
@@ -59,15 +66,8 @@ public class Customer {
         this.email = new Email(email);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Customer customer)) return false;
-        return Objects.equals(customerId, customer.customerId);
+    private void setName(final String name) {
+        this.name = new Name(name);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(customerId);
-    }
 }
-

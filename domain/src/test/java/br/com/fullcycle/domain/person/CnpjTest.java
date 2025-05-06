@@ -8,30 +8,28 @@ import org.junit.jupiter.api.Test;
 class CnpjTest {
 
     @Test
-    @DisplayName("Deve instanciar um CNPJ")
+    @DisplayName("Deve instanciar um CNPJ valido")
     public void testCreateCNPJ() {
-
         // given
-        final var expectedCNP = "45.536.538/0001-00";
+        final var expectedCNPJ = "41.536.538/0001-00";
 
         // when
-        final var actualCnpj = new Cnpj(expectedCNP);
+        final var actualCnpj = new Cnpj(expectedCNPJ);
 
         // then
-        Assertions.assertEquals(expectedCNP, actualCnpj.value());
+        Assertions.assertEquals(expectedCNPJ, actualCnpj.value());
     }
 
     @Test
-    @DisplayName("Não deve instanciar um CNPJ inválido")
+    @DisplayName("Não deve instanciar um CNPJ invalido")
     public void testCreateCNPJWithInvalidValue() {
-
         // given
-        final var expectedError = "Invalid value for CNPJ";
+        final var expectedError = "Invalid value for Cnpj";
 
         // when
         final var actualError = Assertions.assertThrows(
                 ValidationException.class,
-                () -> new Cnpj("536.538/0001-00")
+                () -> new Cnpj("123456.789-01")
         );
 
         // then
@@ -41,9 +39,8 @@ class CnpjTest {
     @Test
     @DisplayName("Não deve instanciar um CNPJ null")
     public void testCreateCNPJWithNullValue() {
-
         // given
-        final var expectedError = "Invalid value for CNPJ";
+        final var expectedError = "Invalid value for Cnpj";
 
         // when
         final var actualError = Assertions.assertThrows(
@@ -54,5 +51,4 @@ class CnpjTest {
         // then
         Assertions.assertEquals(expectedError, actualError.getMessage());
     }
-
 }

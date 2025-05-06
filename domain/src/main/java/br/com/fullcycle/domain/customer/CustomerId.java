@@ -17,11 +17,10 @@ public record CustomerId(String value) {
     }
 
     public static CustomerId with(final String value) {
-     try {
-         return new CustomerId(UUID.fromString(value).toString());
-     } catch (IllegalArgumentException ex) {
-         throw  new ValidationException("Invalid value for CustomerId");
-     }
-
+        try {
+            return new CustomerId(UUID.fromString(value).toString());
+        } catch (IllegalArgumentException ex) {
+            throw new ValidationException("Invalid value for CustomerId");
+        }
     }
 }

@@ -17,11 +17,10 @@ public record TicketId(String value) {
     }
 
     public static TicketId with(final String value) {
-     try {
-         return new TicketId(UUID.fromString(value).toString());
-     } catch (IllegalArgumentException ex) {
-         throw  new ValidationException("Invalid value for TicketId");
-     }
-
+        try {
+            return new TicketId(UUID.fromString(value).toString());
+        } catch (IllegalArgumentException ex) {
+            throw new ValidationException("Invalid value for TicketId");
+        }
     }
 }

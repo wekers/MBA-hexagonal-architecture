@@ -15,11 +15,9 @@ public class Partner {
     private Email email;
 
     public Partner(final PartnerId partnerId, final String name, final String cnpj, final String email) {
-
         if (partnerId == null) {
             throw new ValidationException("Invalid partnerId for Partner");
         }
-
 
         this.partnerId = partnerId;
         this.setName(name);
@@ -47,8 +45,17 @@ public class Partner {
         return email;
     }
 
-    private void setName(final String name) {
-        this.name = new Name(name);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Partner partner = (Partner) o;
+        return Objects.equals(partnerId, partner.partnerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(partnerId);
     }
 
     private void setCnpj(final String cnpj) {
@@ -59,16 +66,7 @@ public class Partner {
         this.email = new Email(email);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Partner partner = (Partner) o;
-        return Objects.equals(partnerId, partner.partnerId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(partnerId);
+    private void setName(final String name) {
+        this.name = new Name(name);
     }
 }
-

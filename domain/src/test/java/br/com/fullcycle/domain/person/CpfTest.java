@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 class CpfTest {
 
     @Test
-    @DisplayName("Deve instanciar um CPF")
+    @DisplayName("Deve instanciar um CPF valido")
     public void testCreateCPF() {
-
         // given
-        final var expectedCPF = "455.536.538-52";
+        final var expectedCPF = "411.536.538-00";
 
         // when
         final var actualCpf = new Cpf(expectedCPF);
@@ -22,16 +21,15 @@ class CpfTest {
     }
 
     @Test
-    @DisplayName("Não deve instanciar um CPF inválido")
+    @DisplayName("Não deve instanciar um CPF invalido")
     public void testCreateCPFWithInvalidValue() {
-
         // given
         final var expectedError = "Invalid value for Cpf";
 
         // when
         final var actualError = Assertions.assertThrows(
                 ValidationException.class,
-                () -> new Cpf("3.536.538-52")
+                () -> new Cpf("123456.789-01")
         );
 
         // then
@@ -41,7 +39,6 @@ class CpfTest {
     @Test
     @DisplayName("Não deve instanciar um CPF null")
     public void testCreateCPFWithNullValue() {
-
         // given
         final var expectedError = "Invalid value for Cpf";
 
@@ -54,5 +51,4 @@ class CpfTest {
         // then
         Assertions.assertEquals(expectedError, actualError.getMessage());
     }
-
 }

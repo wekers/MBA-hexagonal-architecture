@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 class EmailTest {
 
     @Test
-    @DisplayName("Deve instanciar um Email")
+    @DisplayName("Deve instanciar um Email valido")
     public void testCreateEmail() {
-
         // given
         final var expectedEmail = "john@gmail.com";
 
@@ -22,16 +21,15 @@ class EmailTest {
     }
 
     @Test
-    @DisplayName("Não deve instanciar um Email inválido")
+    @DisplayName("Não deve instanciar um Email invalido")
     public void testCreateEmailWithInvalidValue() {
-
         // given
         final var expectedError = "Invalid value for Email";
 
         // when
         final var actualError = Assertions.assertThrows(
                 ValidationException.class,
-                () -> new Email("john@g")
+                () -> new Email("josh@s")
         );
 
         // then
@@ -41,7 +39,6 @@ class EmailTest {
     @Test
     @DisplayName("Não deve instanciar um Email null")
     public void testCreateEmailWithNullValue() {
-
         // given
         final var expectedError = "Invalid value for Email";
 
@@ -54,5 +51,4 @@ class EmailTest {
         // then
         Assertions.assertEquals(expectedError, actualError.getMessage());
     }
-
 }

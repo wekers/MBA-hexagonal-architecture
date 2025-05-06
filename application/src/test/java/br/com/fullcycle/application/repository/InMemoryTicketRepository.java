@@ -9,37 +9,33 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-
 public class InMemoryTicketRepository implements TicketRepository {
 
-    private final Map<String, Ticket> ticket;
-
+    private final Map<String, Ticket> tickets;
 
     public InMemoryTicketRepository() {
-        this.ticket = new HashMap<>();
+        this.tickets = new HashMap<>();
     }
 
     @Override
     public Optional<Ticket> ticketOfId(TicketId anId) {
-        return Optional.ofNullable(this.ticket.get(Objects.requireNonNull(anId).value().toString()));
+        return Optional.ofNullable(this.tickets.get(Objects.requireNonNull(anId).value()));
     }
-
 
     @Override
     public Ticket create(Ticket ticket) {
-        this.ticket.put(ticket.ticketId().value(), ticket);
+        this.tickets.put(ticket.ticketId().value(), ticket);
         return ticket;
     }
 
     @Override
     public Ticket update(Ticket ticket) {
-        this.ticket.put(ticket.ticketId().value(), ticket);
-          return ticket;
+        this.tickets.put(ticket.ticketId().value(), ticket);
+        return ticket;
     }
 
     @Override
     public void deleteAll() {
-        this.ticket.clear();
+        this.tickets.clear();
     }
 }
-
